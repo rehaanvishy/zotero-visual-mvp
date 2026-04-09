@@ -1,73 +1,130 @@
-# React + TypeScript + Vite
+# Research Space
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual layer for cross-reference analysis in academic literature, built on top of Zotero.
 
-Currently, two official plugins are available:
+Research Space allows researchers to import papers from their live Zotero library, assign colour-coded themes, and explore relationships between papers through an interactive node-based graph. Sessions are exported as structured proxy notes written back to Zotero.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built as part of an M.Sc. dissertation project at Trinity College Dublin.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Import papers directly from your Zotero library via the Zotero Web API
+- Assign up to 5 colour-coded themes per session
+- Cluster View — group papers visually by assigned theme
+- Map View — interactive node graph with automatic theme-overlap edges and user-defined typed manual links (Theme, Method, Temporal, Custom)
+- Export session as a structured proxy note back to Zotero, with theme tags applied to each paper
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Frontend:** React 18, TypeScript, Vite, ReactFlow, React Router v6
+- **Backend:** Node.js, Express
+- **API Integration:** Zotero Web API (v3)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Prerequisites
+
+- Node.js (v18 or above)
+- A Zotero account with at least one item in your library
+- Your Zotero User ID and API Key (obtainable from [zotero.org/settings/keys](https://www.zotero.org/settings/keys))
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/rehaanvishy/zotero-visual-mvp.git
+cd zotero-visual-mvp
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Configure environment variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file inside the `server/` directory:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+ZOTERO_USER_ID=your_zotero_user_id
+ZOTERO_API_KEY=your_zotero_api_key
+```
+
+### 3. Install dependencies
+
+Install frontend dependencies from the project root:
+
+```bash
+npm install
+```
+
+Install backend dependencies:
+
+```bash
+cd server
+npm install
+cd ..
+```
+
+### 4. Run the application
+
+You need two terminals running simultaneously.
+
+**Terminal 1 — Start the backend (port 3001):**
+
+```bash
+cd server
+node server.js
+```
+
+**Terminal 2 — Start the frontend (port 5173):**
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+---
+
+## Usage
+
+1. **Select Papers** — Import papers from your Zotero library and select up to 5 for the session
+2. **Assign Themes** — Create named, colour-coded themes and assign them to papers
+3. **Cluster View** — Review papers grouped by theme before moving to the graph
+4. **Map View** — Explore automatic theme-overlap connections and create your own typed manual links
+5. **Export** — Write the session back to Zotero as a proxy note with theme tags applied
+
+---
+
+## Project Structure
+
+```
+zotero-visual-mvp/
+├── server/
+│   ├── server.js        # Express backend, Zotero proxy endpoints
+│   ├── index.js         # Export and note construction logic
+│   └── .env             # Zotero credentials (not committed)
+└── src/
+    ├── pages/           # SelectPapers, AssignThemes, ClusterView, MapView
+    ├── state/           # useMvpState.ts — central state hook
+    ├── api.ts           # Frontend API client
+    └── types.ts         # Shared TypeScript types
+```
+
+---
+
+## Limitations
+
+- Sessions are not persisted between browser reloads unless exported to Zotero first
+- Maximum of 5 papers and 5 themes per session
+- Requires local setup — no hosted version is currently available
+- Exported proxy notes cannot be reimported to restore a previous session state
+
+---
+
+## Author
+
+Rehaan Viswanathan — M.Sc. Integrated Computer Science, Trinity College Dublin
