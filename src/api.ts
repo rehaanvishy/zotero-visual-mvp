@@ -9,10 +9,10 @@ export async function fetchZoteroItems(): Promise<ZoteroItem[]> {
   return r.json();
 }
 
-/* ✅ NEW: export Map View -> create Zotero standalone note + update items */
+
 export type ExportMapNotePayload = {
   noteTitle: string;
-  noteContent: string; // what you already generate for the proxy note
+  noteContent: string; //  generate for the proxy note
   itemKeys: string[]; // Zotero item keys (papers)
   itemTags: Record<string, string[]>; // key -> tags (themes)
 };
