@@ -245,15 +245,15 @@ export default function MapView({ mvp }: { mvp: any }) {
     }));
 
     setNodes(built);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [selected, mvp.paperConfig, themeColourHex]);
 
-  /* Build Edges (✅ multi-handle routing + avoid overlap + smoother paths) */
+  
 
   useEffect(() => {
     const out: Edge[] = [];
 
-    // counts per node so multiple links don't use the same side/handle
+    // counts per node 
     const sourceCount = new Map<string, number>();
     const targetCount = new Map<string, number>();
 
@@ -285,7 +285,7 @@ export default function MapView({ mvp }: { mvp: any }) {
         sourceHandle: nextSourceHandle(l.a),
         targetHandle: nextTargetHandle(l.b),
 
-        // smoother routing so it doesn't curl under nodes as much
+       
         type: "smoothstep",
         pathOptions: { offset: 40, borderRadius: 14 },
 
@@ -324,7 +324,7 @@ export default function MapView({ mvp }: { mvp: any }) {
     }
 
     setEdges(out);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [autoLinks, mvp.manualLinks, themeColourHex]);
 
   /* ---------------- Export to Zotero ---------------- */
