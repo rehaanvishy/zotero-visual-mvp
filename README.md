@@ -51,6 +51,9 @@ Create a `.env` file inside the `server/` directory:
 ZOTERO_USER_ID=your_zotero_user_id
 ZOTERO_API_KEY=your_zotero_api_key
 ```
+> **Note for markers:** A `.env` file with working credentials has been included 
+> in the repository for assessment purposes only. This would not be committed 
+> in a production context.
 
 ### 3. Install dependencies
 
