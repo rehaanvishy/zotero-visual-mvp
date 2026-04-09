@@ -196,7 +196,7 @@ app.post("/api/zotero/export-note", async (req, res) => {
       itemType: "note",
       note: noteHtml,
       relations,
-      tags: noteTags, // ✅ note itself becomes searchable by these tags
+      tags: noteTags, 
     };
 
     const createUrl = `${ZOTERO_BASE}/users/${ZOTERO_USER_ID}/items`;
